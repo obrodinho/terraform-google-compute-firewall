@@ -7,6 +7,7 @@ variable "name" {
 variable "description" {
   type = string
   description = "An optional description of this resource. Provide this property when you create the resource."
+	default = ""
 }
 
 variable "network" {
