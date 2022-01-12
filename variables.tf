@@ -4,6 +4,11 @@ variable "name" {
   description = "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035."
 }
 
+variable "description" {
+  type = string
+  description = "An optional description of this resource. Provide this property when you create the resource."
+}
+
 variable "network" {
   type = string
   description = "The name or self_link of the network to attach this firewall to."
