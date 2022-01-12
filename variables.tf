@@ -35,7 +35,7 @@ variable "source_ranges" {
 variable "destination_ranges" {
 	type = list(string)
 	description = "If destination ranges are specified, the firewall will apply only to traffic that has destination IP address in these ranges. These ranges must be expressed in CIDR format."
-	default = [] 
+	default = []
 }
 
 variable "source_tags" {
