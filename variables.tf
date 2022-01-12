@@ -23,25 +23,25 @@ variable "direction" {
 variable "source_ranges" {
 	type = list(string)
 	description = "If source ranges are specified, the firewall will apply only to traffic that has source IP address in these ranges. These ranges must be expressed in CIDR format."
-	default = null
+	default = []
 }
 
 variable "destination_ranges" {
 	type = list(string)
 	description = "If destination ranges are specified, the firewall will apply only to traffic that has destination IP address in these ranges. These ranges must be expressed in CIDR format."
-	default = null
+	default = [] 
 }
 
 variable "source_tags" {
 	type = list(string)
 	description = "If destination ranges are specified, the firewall will apply only to traffic that has destination IP address in these ranges. These ranges must be expressed in CIDR format."
-	default = null
+	default = []
 }
 
 variable "target_tags" {
 	type = list(string)
 	description = "If destination ranges are specified, the firewall will apply only to traffic that has destination IP address in these ranges. These ranges must be expressed in CIDR format."
-	default = null
+	default = []
 }
 
 variable "allow" {
@@ -50,7 +50,7 @@ variable "allow" {
       protocol = string
       ports = list(string)
   }))
-	default = null
+	default = []
 }
 
 variable "deny" {
@@ -59,6 +59,6 @@ variable "deny" {
       protocol = string
       ports = list(string)
   }))
-	default = null
+	default = []
 }
 
