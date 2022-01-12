@@ -4,8 +4,8 @@ resource "google_compute_firewall" "firewall" {
 	description 			 = var.description == "" ? null : var.description
 	project		  			 = var.project
 	direction					 = var.direction
-	source_ranges 		 = var.direction == "EGRESS" || var.source_ranges == [] ? null : var.source_ranges
-	destination_ranges = var.direction == "INGRESS" || var.destination_ranges == [] ? null : var.destination_ranges
+	source_ranges 		 = var.destination_ranges != [] || var.direction == "EGRESS" || var.source_ranges == [] ? null : var.source_ranges
+	destination_ranges = var.source_ranges != [] || var.direction == "INGRESS" || var.destination_ranges == [] ? null : var.destination_ranges
 
   dynamic "allow" {
 		for_each = var.allow
@@ -23,8 +23,8 @@ resource "google_compute_firewall" "firewall" {
 		}
   }
 
-  source_tags = var.direction == "EGRESS" || var.source_tags == [] ? null : var.source_tags
-  target_tags = var.direction == "INGRESS" || var.target_tags == [] ? null : var.target_tags
-	source_service_accounts = var.direction == "EGRESS" || var.source_service_accounts == [] ? null : var.source_service_accounts
-	target_service_accounts = var.direction == "INGRESS" || var.target_service_accounts == [] ? null : var.target_service_accounts
+  source_tags = var.direction == var.source_service_accounts != [] || "EGRESS" || var.source_tags == [] ? null : var.source_tags
+  target_tags = var.direction == var.target_service_accounts != [] || "INGRESS" || var.target_tags == [] ? null : var.target_tags
+	source_service_accounts = var.source_tags != [] || var.direction == "EGRESS" || var.source_service_accounts == [] ? null : var.source_service_accounts
+	target_service_accounts = var.target_tags != [] ||  var.direction == "INGRESS" || var.target_service_accounts == [] ? null : var.target_service_accounts
 }
