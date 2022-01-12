@@ -50,6 +50,18 @@ variable "target_tags" {
 	default = []
 }
 
+variable "source_service_accounts" {
+	type = list(string)
+	description = "If source service accounts are specified, the firewall will apply only to traffic originating from an instance with a service account in this list."
+	default = []
+}
+
+variable "target_service_accounts" {
+	type = list(string)
+	description = "A list of service accounts indicating sets of instances located in the network that may make network connections as specified in allowed[]. targetServiceAccounts cannot be used at the same time as targetTags or sourceTags."
+	default = []
+}
+
 variable "allow" {
   description = "The list of ALLOW rules specified by this firewall. Each rule specifies a protocol and port-range tuple that describes a permitted connection."
   type = list(object({
