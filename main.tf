@@ -28,7 +28,10 @@ resource "google_compute_firewall" "this" {
   source_service_accounts = length(var.source_tags) != 0 || length(var.source_service_accounts) == 0 ? null : var.source_service_accounts
   target_service_accounts = length(var.target_tags) != 0 || length(var.target_service_accounts) == 0 ? null : var.target_service_accounts
 
-  log_config {
-    metadata = var.enable_logging? "INCLUDE_ALL_METADATA" : null
+  dynamic "log_config" {
+    for_each = toset(var.enable_logging ? ["iterate me"] : [])
+    content {
+      metadata = "INCLUDE_ALL_METADATA"
+    }
   }
 }
