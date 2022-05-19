@@ -1,7 +1,18 @@
-//required
 variable "name" {
   type        = string
   description = "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035."
+  # RFC 1035: label
+  # <label> ::= <letter> [ [ <ldh-str> ] <let-dig> ]
+  # Revised Golang: `\A[^0-9-][a-zA-Z0-9-]{1,60}[^-]\z`
+  # https://regex101.com/r/7BRZe0/2
+  validation {
+    condition     = length(var.name) == 0 || length(var.name) > 63
+    error_message = "The name must be 1-63 characters long."
+  }
+  validation {
+    condition     = can(regex("\\A[^0-9-][a-zA-Z0-9-]+[^-]\\z", var.name))
+    error_message = "The name must comply with RFC1035."
+  }
 }
 
 variable "description" {
@@ -15,7 +26,6 @@ variable "network" {
   description = "The name or self_link of the network to attach this firewall to."
 }
 
-//optional
 variable "project" {
   type        = string
   description = "The ID of the project in which the resource belongs. If it is not provided, the provider project is used."
@@ -27,12 +37,11 @@ variable "direction" {
   {
    "type": "json",
    "purpose": "autocomplete",
-   "data": [ "INGRESS",
-             "EGRESS"
-              ],
+   "data": [ "INGRESS", "EGRESS"],
    "description": "Direction of traffic to which this firewall applies; default is INGRESS."
-}
-EOT
+  }
+  EOT
+  default     = "INGRESS"
 }
 
 variable "source_ranges" {
@@ -73,19 +82,24 @@ variable "target_service_accounts" {
 
 variable "allow" {
   description = "The list of ALLOW rules specified by this firewall. Each rule specifies a protocol and port-range tuple that describes a permitted connection."
-  type = list(object({
+  type        = list(object({
     protocol = string
     ports    = list(string)
   }))
-  default = []
+  default     = []
 }
 
 variable "deny" {
   description = "The list of DENY rules specified by this firewall. Each rule specifies a protocol and port-range tuple that describes a denied connection."
-  type = list(object({
+  type        = list(object({
     protocol = string
     ports    = list(string)
   }))
-  default = []
+  default     = []
 }
 
+variable "enable_logging" {
+  description = "Enables all metadata logging to this firewall"
+  type = bool
+  default = false
+}
