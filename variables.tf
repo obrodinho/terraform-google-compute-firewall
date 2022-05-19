@@ -6,7 +6,7 @@ variable "name" {
   # Revised Golang: `\A[^0-9-][a-zA-Z0-9-]{1,60}[^-]\z`
   # https://regex101.com/r/7BRZe0/2
   validation {
-    condition     = length(var.name) == 0 || length(var.name) > 63
+    condition     = length(var.name) > 0 && length(var.name) <= 63
     error_message = "The name must be 1-63 characters long."
   }
   validation {
