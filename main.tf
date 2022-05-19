@@ -1,4 +1,4 @@
-resource "google_compute_firewall" "firewall" {
+resource "google_compute_firewall" "this" {
   name               = var.name
   network            = var.network
   description        = var.description == "" ? null : var.description
@@ -27,4 +27,8 @@ resource "google_compute_firewall" "firewall" {
   target_tags             = length(var.target_service_accounts) != 0 || length(var.target_tags) == 0 ? null : var.target_tags
   source_service_accounts = length(var.source_tags) != 0 || length(var.source_service_accounts) == 0 ? null : var.source_service_accounts
   target_service_accounts = length(var.target_tags) != 0 || length(var.target_service_accounts) == 0 ? null : var.target_service_accounts
+
+  log_config {
+    metadata = var.enable_logging? "INCLUDE_ALL_METADATA" : null
+  }
 }
