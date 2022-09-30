@@ -82,24 +82,24 @@ variable "target_service_accounts" {
 
 variable "allow" {
   description = "The list of ALLOW rules specified by this firewall. Each rule specifies a protocol and port-range tuple that describes a permitted connection."
-  type        = list(object({
+  type = list(object({
     protocol = string
-    ports    = list(string)
+    ports    = optional(list(string))
   }))
-  default     = []
+  default = []
 }
 
 variable "deny" {
   description = "The list of DENY rules specified by this firewall. Each rule specifies a protocol and port-range tuple that describes a denied connection."
-  type        = list(object({
+  type = list(object({
     protocol = string
-    ports    = list(string)
+    ports    = optional(list(string))
   }))
-  default     = []
+  default = []
 }
 
 variable "enable_logging" {
   description = "Enables all metadata logging to this firewall"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
