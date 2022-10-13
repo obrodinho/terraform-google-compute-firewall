@@ -1,10 +1,13 @@
 terraform {
-  required_version = ">= 1.1.7"
-  experiments      = [module_variable_optional_attrs]
+  required_version = ">= 1.3.0"
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "4.21.0"
+      version = "4.40.0"
+    }
+    google-beta = {
+      source  = "hashicorp/google-beta"
+      version = "4.40.0"
     }
   }
 }

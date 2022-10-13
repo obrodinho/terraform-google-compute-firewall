@@ -84,7 +84,7 @@ variable "allow" {
   description = "The list of ALLOW rules specified by this firewall. Each rule specifies a protocol and port-range tuple that describes a permitted connection."
   type = list(object({
     protocol = string
-    ports    = optional(list(string))
+    ports    = list(string)
   }))
   default = []
 }
